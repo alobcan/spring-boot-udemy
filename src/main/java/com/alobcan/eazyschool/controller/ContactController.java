@@ -18,8 +18,6 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
-    private static Logger log = LoggerFactory.getLogger(ContactController.class);
-
     @RequestMapping("/contact")
     public String displayContactPage() {
         return "contact.html";
