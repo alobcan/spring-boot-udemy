@@ -18,14 +18,21 @@ public class ProjectSecurityConf {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/dashboard").authenticated()
                 .requestMatchers("/home").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
                 .requestMatchers("/contact").permitAll()
                 .requestMatchers("/saveMsg").permitAll()
-                .requestMatchers("/courses").authenticated()
-                .requestMatchers("/about").authenticated()
+                .requestMatchers("/courses").permitAll()
+                .requestMatchers("/about").permitAll()
                 .requestMatchers("/assets/**").permitAll()
+                .requestMatchers("/login").permitAll()
                 .and().formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/dashboard")
+                .failureForwardUrl("/login?error=true").permitAll()
+                .and().logout().logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true).permitAll()
                 .and().httpBasic();
         return http.build();
     }
