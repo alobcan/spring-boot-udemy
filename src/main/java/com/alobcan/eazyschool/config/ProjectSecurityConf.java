@@ -1,5 +1,6 @@
 package com.alobcan.eazyschool.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +17,7 @@ import java.util.List;
 public class ProjectSecurityConf {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().ignoringRequestMatchers("/saveMsg").ignoringRequestMatchers(PathRequest.toH2Console()).and()
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
                 .requestMatchers("/home").permitAll()
@@ -33,7 +34,11 @@ public class ProjectSecurityConf {
                 .failureForwardUrl("/login?error=true").permitAll()
                 .and().logout().logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true).permitAll()
+                .and().authorizeHttpRequests().requestMatchers(PathRequest.toH2Console()).permitAll()
                 .and().httpBasic();
+
+        http.headers().frameOptions().disable();
+
         return http.build();
     }
 
