@@ -11,7 +11,7 @@ INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
  VALUES (' Dec 25 ','Christmas','FESTIVAL',CURDATE(),'DBA');
 
 INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
- VALUES (' Jan 17 ','Martin Luther King Jr. Day','FEDERAL',CURDATE(),'DBA');
+ VALUES (' Jan 17 ','Martin Luther King Jr Day','FEDERAL',CURDATE(),'DBA');
 
 INSERT INTO `holidays` (`day`,`reason`,`type`,`created_at`, `created_by`)
  VALUES (' July 4 ','Independence Day','FEDERAL',CURDATE(),'DBA');
