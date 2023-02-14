@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 public class HolidaysController {
@@ -41,11 +42,13 @@ public class HolidaysController {
             }
         }
 
-        List<Holiday> holidays = holidaysRepository.findAllHolidays();
+        Iterable<Holiday> holidays = holidaysRepository.findAll();
+        List<Holiday> holidayList = StreamSupport.stream(holidays.spliterator(), false)
+                .collect(Collectors.toList());
         Holiday.Type[] types = Holiday.Type.values();
         for (Holiday.Type type : types) {
             model.addAttribute(type.toString(),
-                    (holidays.stream().filter(holiday -> holiday.getType().equals(type)).collect(Collectors.toList())));
+                    (holidayList.stream().filter(holiday -> holiday.getType().equals(type)).collect(Collectors.toList())));
         }
         return "holidays.html";
     }
