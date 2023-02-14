@@ -21,6 +21,7 @@ public class ProjectSecurityConf {
                 .authorizeHttpRequests()
                 .requestMatchers("/dashboard").authenticated()
                 .requestMatchers("/displayMessages").hasRole("ADMIN")
+                .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                 .requestMatchers("/logout").authenticated()
                 .requestMatchers("/home").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
