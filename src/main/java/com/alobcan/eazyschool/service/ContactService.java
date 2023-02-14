@@ -3,14 +3,11 @@ package com.alobcan.eazyschool.service;
 import com.alobcan.eazyschool.constants.EazySchoolConstants;
 import com.alobcan.eazyschool.model.Contact;
 import com.alobcan.eazyschool.repository.ContactRepository;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.ApplicationScope;
-
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -30,5 +27,10 @@ public class ContactService {
         int result = contactRepository.saveContactMsg(contact);
         log.info(contact.toString());
         return (result > 0);
+    }
+
+    public List<Contact> findMsgsWithOpenStatus() {
+        List<Contact> contacts = contactRepository.findMsgWithStatus(EazySchoolConstants.OPEN);
+        return contacts;
     }
 }
