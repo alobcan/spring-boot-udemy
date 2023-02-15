@@ -42,20 +42,4 @@ public class ProjectSecurityConf {
 
         return http.build();
     }
-
-    @Bean
-    public InMemoryUserDetailsManager userDetailsService() {
-        List<UserDetails> user = new ArrayList<>();
-        user.add(User.withDefaultPasswordEncoder()
-                .username("user")
-                .password("12345")
-                .roles("USER")
-                .build());
-        user.add(User.withDefaultPasswordEncoder()
-                .username("admin")
-                .password("54321")
-                .roles("USER", "ADMIN")
-                .build());
-        return new InMemoryUserDetailsManager(user);
-    }
 }
