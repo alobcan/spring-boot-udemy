@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -23,13 +24,16 @@ public class EazySchoolUsernamePwdAuthenticationProvider implements Authenticati
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
         String pwd = authentication.getCredentials().toString();
         Person person = personRepository.getByEmail(email);
-        if (Objects.nonNull(person) && person.getPersonId() > 0 && pwd.equals(person.getPwd())) {
-            return new UsernamePasswordAuthenticationToken(person.getName(), pwd, getGrantedAuthorities(person.getRoles()));
+        if (Objects.nonNull(person) && person.getPersonId() > 0 && passwordEncoder.matches(pwd, person.getPwd())) {
+            return new UsernamePasswordAuthenticationToken(email, pwd, getGrantedAuthorities(person.getRoles()));
         } else {
             throw new BadCredentialsException("Invalid credentials!");
         }
