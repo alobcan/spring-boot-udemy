@@ -11,20 +11,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping(path = "/api/contact")
 public class ContactRestController {
     @Autowired
     ContactRepository contactRepository;
 
     @GetMapping("/getMessagesByStatus")
-    @ResponseBody
     public List<Contact> getMessagesByStatus(@RequestParam(name = "status") String status) {
         return contactRepository.findByStatus(status);
     }
 
     @GetMapping("/getAllMsgsByStatus")
-    @ResponseBody
     public List<Contact> getAllMsgsByStatus(@RequestBody Contact contact) {
         if (Objects.nonNull(contact) && Objects.nonNull(contact.getStatus())) {
             return contactRepository.findByStatus(contact.getStatus());
