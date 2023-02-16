@@ -27,6 +27,7 @@ public class ProjectSecurityConf {
                 .requestMatchers("/logout").authenticated()
                 .requestMatchers("/displayProfile").authenticated()
                 .requestMatchers("/updateProfile").authenticated()
+                .requestMatchers("/admin/**").authenticated()
                 .requestMatchers("/home").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
                 .requestMatchers("/contact").permitAll()
