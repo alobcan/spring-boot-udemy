@@ -72,4 +72,10 @@ public class Person extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
     private EazyClass eazyClass;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "person_courses",
+            joinColumns =  {@JoinColumn(name = "person_id", referencedColumnName = "personId")},
+            inverseJoinColumns = {@JoinColumn(name = "course_id", referencedColumnName = "courseId")})
+    private Set<Courses> courses = new HashSet<>();
 }

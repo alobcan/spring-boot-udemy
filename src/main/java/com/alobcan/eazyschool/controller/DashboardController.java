@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Objects;
+
 @Slf4j
 @Controller
 public class DashboardController {
@@ -22,6 +24,9 @@ public class DashboardController {
         Person person = personRepository.getByEmail(authentication.getName());
         model.addAttribute("username", person.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
+        if (Objects.nonNull(person.getEazyClass()) && Objects.nonNull(person.getEazyClass().getName())) {
+            model.addAttribute("enrolledClass", person.getEazyClass().getName());
+        }
         session.setAttribute("loggedInPerson", person);
         return "dashboard.html";
     }
