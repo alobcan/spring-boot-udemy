@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Objects;
 
 @Slf4j
-@Controller
+@Controller("profileControllerBean")
 public class ProfileController {
 
     @Autowired

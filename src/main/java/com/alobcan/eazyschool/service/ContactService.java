@@ -10,10 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -38,7 +34,7 @@ public class ContactService {
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending());
-        Page<Contact> contacts = contactRepository.findByStatus(EazySchoolConstants.OPEN, pageable);
+        Page<Contact> contacts = contactRepository.findByStatusWithQuery(EazySchoolConstants.OPEN, pageable);
         return contacts;
     }
 
