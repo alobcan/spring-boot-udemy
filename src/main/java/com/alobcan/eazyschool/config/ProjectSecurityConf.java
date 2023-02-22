@@ -38,6 +38,7 @@ public class ProjectSecurityConf {
                 .requestMatchers("/student/**").hasRole("STUDENT")
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .requestMatchers("/home").permitAll()
+                .requestMatchers("/").permitAll()
                 .requestMatchers("/holidays/**").permitAll()
                 .requestMatchers("/contact").permitAll()
                 .requestMatchers("/saveMsg").permitAll()
