@@ -1,5 +1,6 @@
 package com.alobcan.eazyschool.service;
 
+import com.alobcan.eazyschool.config.EazySchoolProps;
 import com.alobcan.eazyschool.constants.EazySchoolConstants;
 import com.alobcan.eazyschool.model.Contact;
 import com.alobcan.eazyschool.repository.ContactRepository;
@@ -11,12 +12,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @Slf4j
 public class ContactService {
 
     @Autowired
     ContactRepository contactRepository;
+
+    @Autowired
+    EazySchoolProps eazySchoolProps;
 
     public ContactService() {
         System.out.println("Contact service Bean initialized");
@@ -30,7 +36,10 @@ public class ContactService {
     }
 
     public Page<Contact> findMsgsWithOpenStatus(int pageNum, String sortField, String sortDir) {
-        int pageSize = 5;
+        int pageSize = eazySchoolProps.getPageSize();
+        if (Objects.nonNull(eazySchoolProps.getContact()) && Objects.nonNull(eazySchoolProps.getContact().get("pageSize"))) {
+            pageSize = Integer.parseInt(eazySchoolProps.getContact().get("pageSize").trim());
+        }
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize,
                 sortDir.equals("asc") ? Sort.by(sortField).ascending()
                 : Sort.by(sortField).descending());
